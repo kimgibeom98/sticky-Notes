@@ -21,5 +21,38 @@ window.onload = function(){
     document.addEventListener('contextmenu', (event) => {
         event.preventDefault();
     });
+
+     // 메모추가 함수
+     function addnote(){
+        let newdiv = document.createElement("div");
+        newdiv.classList.add(`note-box${count}`);
+    
+        let clisediv = document.createElement("div");
+        let closebtn = document.createElement("button");
+        let closetxt = document.createTextNode('X'); 
+
+        closebtn.appendChild(closetxt);
+        closebtn.onclick = delnote;
+
+        clisediv.appendChild(closebtn);
+
+        let newtextarea = document.createElement("textarea");
+        newtextarea.placeholder = '메모를 입력하세요...';
+    
+        newdiv.appendChild(clisediv);
+        newdiv.appendChild(newtextarea);
+        $body.appendChild(newdiv);
+        
+        newdiv.style.top = cursorx;
+        newdiv.style.left = cursory;
+        
+        count ++;
+    }
+
+      // 메모삭제 함수
+      function delnote(){
+        this.parentNode.parentNode.remove();
+    }
+
     
 }
