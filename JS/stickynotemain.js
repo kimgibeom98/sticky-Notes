@@ -45,9 +45,10 @@ window.onload = function(){
         newdiv.style.left = cursory;
 
         // 내용 수정시 최상단으로 나옴
-        newtextarea.addEventListener('mousedown', () => {
-            console.log(newdiv.closest(this.parentNode))
-            document.body.append(newdiv);
+        newtextarea.addEventListener('mouseup', (event) => {
+            if(event.button === 0){
+                document.body.append(newdiv);
+            }
         });
 
 
