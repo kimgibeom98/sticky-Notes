@@ -44,6 +44,13 @@ window.onload = function(){
         newdiv.style.top = cursorx;
         newdiv.style.left = cursory;
 
+        // 내용 수정시 최상단으로 나옴
+        newtextarea.addEventListener('mousedown', () => {
+            console.log(newdiv.closest(this.parentNode))
+            document.body.append(newdiv);
+        });
+
+
         count ++;
 
         // 드래그앤 드랍
@@ -65,7 +72,18 @@ window.onload = function(){
             }
         }
 
-      
+        // 드래그 끝
+        function drageEnd(){
+            isDragging = false
+        }
+
+        // 드래그 진행중
+        function drageMove(event){
+            if(isDragging){
+                newdiv.style.top = `${event.pageY - findY}px`;
+                newdiv.style.left = `${event.pageX - findX}px`;
+            }
+        }
 
     }
 
