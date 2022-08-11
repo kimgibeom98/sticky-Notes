@@ -44,12 +44,14 @@ window.onload = function(){
         newdiv.style.top = cursorx;
         newdiv.style.left = cursory;
 
-        // 내용 수정시 최상단으로 나옴
-        newtextarea.addEventListener('mouseup', (event) => {
-            if(event.button === 0){
-                document.body.append(newdiv);
-            }
-        });
+            // 내용 수정시 최상단으로 나옴
+            newtextarea.addEventListener('mouseup', (event) => {
+
+                if(event.button === 0){
+                    document.body.append(newdiv);
+                    newtextarea.focus();
+                }
+            });
 
 
         count ++;
