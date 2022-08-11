@@ -54,37 +54,6 @@ window.onload = function(){
 
         count ++;
 
-        // 드래그앤 드랍
-        let isDragging;
-        let findX;
-        let findY;
-
-        topbox.addEventListener('mousedown', drageStart);
-        document.addEventListener('mouseup', drageEnd);
-        document.addEventListener('mousemove', drageMove);
-
-        // 드래그 시작
-        function drageStart(event){
-            if(event.button === 0){
-                findX = event.pageX - topbox.getBoundingClientRect().left;
-                findY = event.pageY - topbox.getBoundingClientRect().top;
-                isDragging = true
-                document.body.append(newdiv);
-            }
-        }
-
-        // 드래그 끝
-        function drageEnd(){
-            isDragging = false
-        }
-
-        // 드래그 진행중
-        function drageMove(event){
-            if(isDragging){
-                newdiv.style.top = `${event.pageY - findY}px`;
-                newdiv.style.left = `${event.pageX - findX}px`;
-            }
-        }
 
     }
 
@@ -93,7 +62,36 @@ window.onload = function(){
         this.parentNode.remove();
     }
 
- 
+   // 드래그 & 드랍 함수
+   function drageEvent(parentBox,moveTop){
+    let isDragging;
+    let findX;
+    let findY;
+
+    moveTop.addEventListener('mousedown', drageStart);
+    document.addEventListener('mouseup', drageEnd);
+    document.addEventListener('mousemove', drageMove);
+    // 드래그 시작
+    function drageStart(event){
+        if(event.button === 0){
+            findX = event.pageX - moveTop.getBoundingClientRect().left;
+            findY = event.pageY - moveTop.getBoundingClientRect().top;
+            isDragging = true
+            document.body.append(parentBox);
+        }
+    }
+    // 드래그 끝
+    function drageEnd(){
+        isDragging = false
+    }
+    // 드래그 진행중
+    function drageMove(event){
+        if(isDragging){
+            parentBox.style.top = `${event.pageY - findY}px`;
+            parentBox.style.left = `${event.pageX - findX}px`;
+        }
+    }
+}
 
 
 }
