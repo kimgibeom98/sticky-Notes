@@ -8,24 +8,24 @@ window.onload = function(){
         cursorx = `${event.pageY}px`;
         cursory = `${event.pageX}px`;
     });
-
-    // 우클릭시 해당 포인터에 메모생성
+    // 메모생성
     document.addEventListener('mousedown', (event) => {
         if ((event.button == 2) || (event.which == 3)) {
-                addnote();
-            }
-        });
+            addnote();
+        }
+    });
 
     // 기본 우클릭 기능제거
     document.addEventListener('contextmenu', (event) => {
         event.preventDefault();
     });
 
-    // 메모추가 함수
+    // 메모생성 함수
     function addnote(){
+        
         const newdiv = document.createElement("div");
         newdiv.classList.add(`note-box${count}`);
-    
+
         const topbox = document.createElement("div");
         const closebtn = document.createElement("button");
         const closetxt = document.createTextNode('X'); 
@@ -35,65 +35,71 @@ window.onload = function(){
 
         const newtextarea = document.createElement("textarea");
         newtextarea.placeholder = '메모를 입력하세요...';
-    
+
         newdiv.appendChild(topbox);
         newdiv.appendChild(closebtn);
         newdiv.appendChild(newtextarea);
         document.body.appendChild(newdiv);
-        
+
         newdiv.style.top = cursorx;
         newdiv.style.left = cursory;
 
-            // 내용 수정시 최상단으로 나옴
-            newtextarea.addEventListener('mouseup', (event) => {
+        // 내용 수정시 최상단으로 나옴
+        newtextarea.addEventListener('mouseup', (event) => {
 
-                if(event.button === 0){
-                    document.body.append(newdiv);
-                    newtextarea.focus();
-                }
-            });
-
+            if(event.button === 0){
+                document.body.append(newdiv);
+                newtextarea.focus();
+            }
+        });
 
         count ++;
 
+        drageEvent(newdiv,topbox);
 
+        // let notecontent = document.body.innerHTML;
+        // localStorage.setItem("notefull", notecontent);
     }
+
+        localStorage.clear();
 
     // 메모삭제 함수
     function delnote(){
         this.parentNode.remove();
     }
 
-   // 드래그 & 드랍 함수
-   function drageEvent(parentBox,moveTop){
-    let isDragging;
-    let findX;
-    let findY;
+    // 드래그 & 드랍 함수
+    function drageEvent(parentBox,moveTop){
+        let isDragging;
+        let findX;
+        let findY;
 
-    moveTop.addEventListener('mousedown', drageStart);
-    document.addEventListener('mouseup', drageEnd);
-    document.addEventListener('mousemove', drageMove);
-    // 드래그 시작
-    function drageStart(event){
-        if(event.button === 0){
-            findX = event.pageX - moveTop.getBoundingClientRect().left;
-            findY = event.pageY - moveTop.getBoundingClientRect().top;
-            isDragging = true
-            document.body.append(parentBox);
+        moveTop.addEventListener('mousedown', drageStart);
+        document.addEventListener('mouseup', drageEnd);
+        document.addEventListener('mousemove', drageMove);
+        // 드래그 시작
+        function drageStart(event){
+            if(event.button === 0){
+                findX = event.pageX - moveTop.getBoundingClientRect().left;
+                findY = event.pageY - moveTop.getBoundingClientRect().top;
+                isDragging = true
+                document.body.append(parentBox);
+            }
+        }
+        // 드래그 끝
+        function drageEnd(){
+            isDragging = false
+        }
+        // 드래그 진행중
+        function drageMove(event){
+            if(isDragging){
+                parentBox.style.top = `${event.pageY - findY}px`;
+                parentBox.style.left = `${event.pageX - findX}px`;
+            }
         }
     }
-    // 드래그 끝
-    function drageEnd(){
-        isDragging = false
-    }
-    // 드래그 진행중
-    function drageMove(event){
-        if(isDragging){
-            parentBox.style.top = `${event.pageY - findY}px`;
-            parentBox.style.left = `${event.pageX - findX}px`;
-        }
-    }
-}
 
+    let fullbox = localStorage.getItem('notefull');    
+    document.body.innerHTML = fullbox;
 
 }
