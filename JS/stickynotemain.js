@@ -1,5 +1,4 @@
 window.onload = function(){
-
     let cursorx;
     let cursory;
     let count = 1;
@@ -10,8 +9,14 @@ window.onload = function(){
     });
     // 메모생성
     document.addEventListener('mousedown', (event) => {
-        if ((event.button == 2) || (event.which == 3)) {
+        if((event.button == 2) || (event.which == 3)){
             addnote();
+        }else{
+            let find = document.querySelector('.close-btn');
+            find.addEventListener('mousedown', (event) => {
+                console.log(event.target.parentNode)
+                refreshcontrol(event.target);
+            });
         }
     });
 
@@ -19,60 +24,68 @@ window.onload = function(){
     document.addEventListener('contextmenu', (event) => {
         event.preventDefault();
     });
-
+    
     // 메모생성 함수
     function addnote(){
-        
         const newdiv = document.createElement("div");
         newdiv.classList.add(`note-box${count}`);
+        newdiv.classList.add(`common-box`);
 
         const topbox = document.createElement("div");
         const closebtn = document.createElement("button");
-        const closetxt = document.createTextNode('X'); 
+        const closetxt = document.createTextNode('X');
+        
+        topbox.classList.add('move-div');
 
         closebtn.appendChild(closetxt);
-        closebtn.onclick = delnote;
-
+        closebtn.classList.add(`close-btn`);
+        
         const newtextarea = document.createElement("textarea");
         newtextarea.placeholder = '메모를 입력하세요...';
 
         newdiv.appendChild(topbox);
         newdiv.appendChild(closebtn);
         newdiv.appendChild(newtextarea);
-        document.body.appendChild(newdiv);
 
+        document.body.appendChild(newdiv);
         newdiv.style.top = cursorx;
         newdiv.style.left = cursory;
 
-        // 내용 수정시 최상단으로 나옴
-        newtextarea.addEventListener('mouseup', (event) => {
-
-            if(event.button === 0){
-                document.body.append(newdiv);
-                newtextarea.focus();
-            }
-        });
-
+        delnote(closebtn);
+        drageEvent(newdiv,topbox,newtextarea);
+        
         count ++;
 
-        drageEvent(newdiv,topbox);
-
-        // let notecontent = document.body.innerHTML;
-        // localStorage.setItem("notefull", notecontent);
+        let notecontent = document.body.innerHTML;
+        localStorage.setItem("notefull", notecontent);
     }
-
-        localStorage.clear();
-
+       
+    let fullbox = localStorage.getItem('notefull');    
+    document.body.innerHTML = fullbox;
+    localStorage.clear();
+        
     // 메모삭제 함수
-    function delnote(){
-        this.parentNode.remove();
+    function delnote(closttarget){
+        closttarget.addEventListener('click', (event) => {
+            console.log(closttarget.parentNode)
+            event.target.parentNode.remove();
+        })
     }
 
     // 드래그 & 드랍 함수
-    function drageEvent(parentBox,moveTop){
+    function drageEvent(parentBox,moveTop,firsttextarea){
         let isDragging;
         let findX;
         let findY;
+
+        // 내용 수정시 최상단으로 나옴
+        firsttextarea.addEventListener('mouseup', (event) => {
+
+            if(event.button === 0){
+                document.body.append(parentBox);
+                firsttextarea.focus();
+            }
+        });
 
         moveTop.addEventListener('mousedown', drageStart);
         document.addEventListener('mouseup', drageEnd);
@@ -99,7 +112,10 @@ window.onload = function(){
         }
     }
 
-    let fullbox = localStorage.getItem('notefull');    
-    document.body.innerHTML = fullbox;
+    // 새로고침후 메모 제어
+    function refreshcontrol(targetbox){
+        console.log(123);
+            targetbox.parentNode.remove();
+    }
 
 }
