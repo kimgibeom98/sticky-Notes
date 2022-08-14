@@ -33,7 +33,7 @@ window.onload = function(){
         topbox.classList.add('move-div');
 
         closebtn.appendChild(closetxt);
-        closebtn.idList(`close-btn`);
+        closebtn.classList.add(`close-btn`);
         
         const newtextarea = document.createElement("textarea");
         newtextarea.placeholder = '메모를 입력하세요...';
@@ -62,7 +62,7 @@ window.onload = function(){
     // 메모삭제 함수
     function delnote(closttarget){
         closttarget.addEventListener('click', (event) => {
-            event.target.append.remove();
+            event.target.parentNode.remove();
         })
     }
 
