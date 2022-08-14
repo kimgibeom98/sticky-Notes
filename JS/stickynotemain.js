@@ -67,7 +67,6 @@ window.onload = function(){
     // 메모삭제 함수
     function delnote(closttarget){
         closttarget.addEventListener('click', (event) => {
-            console.log(closttarget.parentNode)
             event.target.parentNode.remove();
         })
     }
@@ -113,9 +112,10 @@ window.onload = function(){
     }
 
     // 새로고침후 메모 제어
-    function refreshcontrol(targetbox){
-        console.log(123);
-            targetbox.parentNode.remove();
+    function refreshcontrol(targetclose){
+   
+            targetclose.parentNode.remove();
+        
     }
 
 }
