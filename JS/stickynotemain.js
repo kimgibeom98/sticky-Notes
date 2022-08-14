@@ -1,4 +1,4 @@
-window.onload = function(){
+
     let cursorx;
     let cursory;
 
@@ -122,5 +122,3 @@ window.onload = function(){
     //     this.parentNode.remove();
     // })
 
-
-}
