@@ -1,6 +1,8 @@
 window.onload = function(){
     let cursorx;
     let cursory;
+
+
     let count = 1;
     // 마우스 위치 찾기
     document.addEventListener("mousemove", (event) => {
@@ -11,12 +13,6 @@ window.onload = function(){
     document.addEventListener('mousedown', (event) => {
         if((event.button == 2) || (event.which == 3)){
             addnote();
-        }else{
-            let find = document.querySelector('.close-btn');
-            find.addEventListener('mousedown', (event) => {
-                console.log(event.target.parentNode)
-                refreshcontrol(event.target);
-            });
         }
     });
 
@@ -28,8 +24,7 @@ window.onload = function(){
     // 메모생성 함수
     function addnote(){
         const newdiv = document.createElement("div");
-        newdiv.classList.add(`note-box${count}`);
-        newdiv.classList.add(`common-box`);
+        newdiv.classList.add(`note-box${count}`,`common-box`);
 
         const topbox = document.createElement("div");
         const closebtn = document.createElement("button");
@@ -38,7 +33,7 @@ window.onload = function(){
         topbox.classList.add('move-div');
 
         closebtn.appendChild(closetxt);
-        closebtn.classList.add(`close-btn`);
+        closebtn.idList(`close-btn`);
         
         const newtextarea = document.createElement("textarea");
         newtextarea.placeholder = '메모를 입력하세요...';
@@ -67,7 +62,7 @@ window.onload = function(){
     // 메모삭제 함수
     function delnote(closttarget){
         closttarget.addEventListener('click', (event) => {
-            event.target.parentNode.remove();
+            event.target.append.remove();
         })
     }
 
@@ -93,15 +88,18 @@ window.onload = function(){
         function drageStart(event){
             if(event.button === 0){
                 findX = event.pageX - moveTop.getBoundingClientRect().left;
+                console.log(event.pageX, moveTop.getBoundingClientRect().left)
                 findY = event.pageY - moveTop.getBoundingClientRect().top;
                 isDragging = true
                 document.body.append(parentBox);
             }
         }
+
         // 드래그 끝
         function drageEnd(){
             isDragging = false
         }
+
         // 드래그 진행중
         function drageMove(event){
             if(isDragging){
@@ -111,11 +109,18 @@ window.onload = function(){
         }
     }
 
-    // 새로고침후 메모 제어
-    function refreshcontrol(targetclose){
-   
-            targetclose.parentNode.remove();
-        
-    }
+    // // 새로고침후 메모 제어
+    // function refreshcontrol(targetclose){
+    //         targetclose.parentNode.remove();
+    // }
+
+    // document.getElementById('close-btn').onclick = function(){
+        // console.log(123)
+        // this.parentNode.remove();
+    // } 
+    // $('.close-btn').click(function(){
+    //     this.parentNode.remove();
+    // })
+
 
 }
