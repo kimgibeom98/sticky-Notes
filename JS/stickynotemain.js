@@ -2,8 +2,6 @@ let cursorx;
 let cursory;
 let count = 1;
 
-
-
 // 마우스 위치 찾기
 document.addEventListener("mousemove", (event) => {
   cursorx = `${event.pageY}px`;
@@ -14,10 +12,7 @@ document.addEventListener('mousedown', (event) => {
   if (event.button == 2) {
     addnote();
   }else{
-    let test = document.querySelector('.close-btn');
-      test.onclick = function(){
-      test.parentNode.remove();
-    }
+    // event.target.parentNode.remove();
   }
 });
 
