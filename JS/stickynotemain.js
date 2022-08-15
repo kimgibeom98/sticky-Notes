@@ -1,7 +1,7 @@
-
     let cursorx;
     let cursory;
     let count = 1;
+
     // 마우스 위치 찾기
     document.addEventListener("mousemove", (event) => {
         cursorx = `${event.pageY}px`;
@@ -104,17 +104,4 @@
             }
         }
     }
-
-    // // 새로고침후 메모 제어
-    // function refreshcontrol(targetclose){
-    //         targetclose.parentNode.remove();
-    // }
-
-    // document.getElementById('close-btn').onclick = function(){
-        // console.log(123)
-        // this.parentNode.remove();
-    // } 
-    // $('.close-btn').click(function(){
-    //     this.parentNode.remove();
-    // })
 
