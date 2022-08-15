@@ -1,8 +1,6 @@
 
     let cursorx;
     let cursory;
-
-
     let count = 1;
     // 마우스 위치 찾기
     document.addEventListener("mousemove", (event) => {
@@ -11,7 +9,7 @@
     });
     // 메모생성
     document.addEventListener('mousedown', (event) => {
-        if((event.button == 2) || (event.which == 3)){
+        if(event.button == 2){
             addnote();
         }
     });
@@ -74,7 +72,6 @@
 
         // 내용 수정시 최상단으로 나옴
         firsttextarea.addEventListener('mouseup', (event) => {
-
             if(event.button === 0){
                 document.body.append(parentBox);
                 firsttextarea.focus();
@@ -88,7 +85,6 @@
         function drageStart(event){
             if(event.button === 0){
                 findX = event.pageX - moveTop.getBoundingClientRect().left;
-                console.log(event.pageX, moveTop.getBoundingClientRect().left)
                 findY = event.pageY - moveTop.getBoundingClientRect().top;
                 isDragging = true
                 document.body.append(parentBox);
