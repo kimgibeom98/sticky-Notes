@@ -1,7 +1,8 @@
     let cursorx;
     let cursory;
-    let count = 1;
 
+    const arr = [];
+    const notes = JSON.parse(localStorage.getItem('notes')) ?? [];
     // 마우스 위치 찾기
     document.addEventListener("mousemove", (event) => {
         cursorx = `${event.pageY}px`;
@@ -18,44 +19,56 @@
     document.addEventListener('contextmenu', (event) => {
         event.preventDefault();
     });
-    
+
     // 메모생성 함수
-    function addnote(){
-        const newdiv = document.createElement("div");
-        newdiv.classList.add(`note-box${count}`,`common-box`);
-
-        const topbox = document.createElement("div");
-        const closebtn = document.createElement("button");
-        const closetxt = document.createTextNode('X');
+    function render(){
+        const addnote =  document.querySelector('#wrap').innerHTML = `<div class="note-box"><div></div><button>X</button><textarea placeholder="메모를 입력하세요..."></textarea></div>`
         
-        topbox.classList.add('move-div');
-
-        closebtn.appendChild(closetxt);
-        closebtn.classList.add(`close-btn`);
+        const boxlocation = document.querySelector('.note-box'); 
         
-        const newtextarea = document.createElement("textarea");
-        newtextarea.placeholder = '메모를 입력하세요...';
+        boxlocation.style.top = cursorx;
+        boxlocation.style.left = cursory;
 
-        newdiv.appendChild(topbox);
-        newdiv.appendChild(closebtn);
-        newdiv.appendChild(newtextarea);
-
-        document.body.appendChild(newdiv);
-        newdiv.style.top = cursorx;
-        newdiv.style.left = cursory;
-
-        delnote(closebtn);
-        drageEvent(newdiv,topbox,newtextarea);
-        
-        count ++;
+        arr.push(addnote);
+        console.log(arr)
 
         let notecontent = document.body.innerHTML;
         localStorage.setItem("notefull", notecontent);
     }
+
+    function addnote(){
+        render();
+        // const newdiv = document.createElement("div");
+        // newdiv.classList.add(`note-box${count}`,`common-box`);
+
+        // const topbox = document.createElement("div");
+        // const closebtn = document.createElement("button");
+        // const closetxt = document.createTextNode('X');
+        
+        // topbox.classList.add('move-div');
+
+        // closebtn.appendChild(closetxt);
+        // closebtn.classList.add(`close-btn`);
+        
+        // const newtextarea = document.createElement("textarea");
+        // newtextarea.placeholder = '메모를 입력하세요...';
+
+        // newdiv.appendChild(topbox);
+        // newdiv.appendChild(closebtn);
+        // newdiv.appendChild(newtextarea);
+
+        // document.body.appendChild(newdiv);
+        // document.querySelector('#wrap').innerHTML = `<div class="note-box"><div></div><button>X</button><textarea placeholder="메모를 입력하세요..."></textarea></div>`
+        
+        delnote(closebtn);
+        drageEvent(newdiv,topbox,newtextarea);
+        // let notecontent = document.body.innerHTML;
+        // localStorage.setItem("notefull", notecontent);
+    }
        
-    let fullbox = localStorage.getItem('notefull');    
-    document.body.innerHTML = fullbox;
-    localStorage.clear();
+    // let fullbox = localStorage.getItem('notefull');    
+    // document.body.innerHTML = fullbox;
+    // localStorage.clear();
         
     // 메모삭제 함수
     function delnote(closttarget){
