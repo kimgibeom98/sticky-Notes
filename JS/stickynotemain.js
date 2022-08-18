@@ -2,7 +2,7 @@ let cursorx;
 let cursory;
 
 const momos = [
-  {}
+  {width : 200 + 'px', height : 116 +'px', left : cursorx, top : cursory}
 ];
 const notes = JSON.parse(localStorage.getItem('notes')) ?? [];
 // 마우스 위치 찾기
@@ -25,14 +25,12 @@ document.addEventListener('contextmenu', (event) => {
 
 // 메모생성 함수
 function render() {
-  const addnote = document.querySelector('#wrap').innerHTML = arr.map((content) => `${content}`)
+  const addnote = document.querySelector('#wrap').innerHTML = momos.map((content) => `<div class="note-box" style="left :${content.left}; top: ${content.top};"><div></div><button>X</button><textarea style="width: ${content.width}; height: ${content.height}"></textarea></div>`)
   // let notecontent = document.body.innerHTML;
   // localStorage.setItem("notefull", notecontent);
 }
 
 function addnote(){
-  
-    
 //     delnote(closebtn);
 //     drageEvent(newdiv,topbox,newtextarea);
 
