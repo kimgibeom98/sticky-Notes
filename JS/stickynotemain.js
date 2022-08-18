@@ -1,8 +1,9 @@
 let cursorx;
 let cursory;
 
-// const menunote = [];
-const arr = [];
+const momos = [
+  {}
+];
 const notes = JSON.parse(localStorage.getItem('notes')) ?? [];
 // 마우스 위치 찾기
 document.addEventListener("mousemove", (event) => {
@@ -25,42 +26,16 @@ document.addEventListener('contextmenu', (event) => {
 // 메모생성 함수
 function render() {
   const addnote = document.querySelector('#wrap').innerHTML = arr.map((content) => `${content}`)
-  console.log(arr)
-
-
-  let notecontent = document.body.innerHTML;
-  localStorage.setItem("notefull", notecontent);
+  // let notecontent = document.body.innerHTML;
+  // localStorage.setItem("notefull", notecontent);
 }
 
 function addnote(){
-    let plusnote = `<div class="note-box" style="left:${cursory}; top:${cursorx}"><div></div><button>X</button><textarea placeholder="메모를 입력하세요..."></textarea></div>`
-    arr.push(plusnote);
+  
     
-//     render();
-//     const newdiv = document.createElement("div");
-//     newdiv.classList.add(`note-box${count}`,`common-box`);
-
-//     const topbox = document.createElement("div");
-//     const closebtn = document.createElement("button");
-//     const closetxt = document.createTextNode('X');
-
-//     topbox.classList.add('move-div');
-
-//     closebtn.appendChild(closetxt);
-//     closebtn.classList.add(`close-btn`);
-
-//     const newtextarea = document.createElement("textarea");
-//     newtextarea.placeholder = '메모를 입력하세요...';
-
-//     newdiv.appendChild(topbox);
-//     newdiv.appendChild(closebtn);
-//     newdiv.appendChild(newtextarea);
-
-//     document.body.appendChild(newdiv);
-//     document.querySelector('#wrap').innerHTML = `<div class="note-box"><div></div><button>X</button><textarea placeholder="메모를 입력하세요..."></textarea></div>`
-
 //     delnote(closebtn);
 //     drageEvent(newdiv,topbox,newtextarea);
+
 //     let notecontent = document.body.innerHTML;
 //     localStorage.setItem("notefull", notecontent);
 }
