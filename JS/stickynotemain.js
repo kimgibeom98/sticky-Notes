@@ -4,7 +4,7 @@ let cursory;
 const momos = [
   {width : 200 + 'px', height : 116 +'px', left : cursorx, top : cursory}
 ];
-const notes = JSON.parse(localStorage.getItem('notes')) ?? [];
+// const notes = JSON.parse(localStorage.getItem('notes')) ?? [];
 // 마우스 위치 찾기
 document.addEventListener("mousemove", (event) => {
   cursorx = `${event.pageY}px`;
