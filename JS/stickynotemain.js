@@ -4,7 +4,7 @@ let isDragging;
 let findX;
 let findY;
 
-// 메모생성 함수
+// 메모 만드는 함수
 function render() {
   const newdiv = document.createElement("div");
   newdiv.classList.add(`note-box`);
@@ -43,6 +43,7 @@ document.addEventListener('contextmenu', (event) => {
   event.preventDefault();
 });
 
+// 드래그앤드롭, 마우스포인터 위치 확인
 document.addEventListener("mousemove", (event) => {
   cursorx = `${event.pageY}px`;
   cursory = `${event.pageX}px`;
@@ -53,6 +54,7 @@ document.addEventListener("mousemove", (event) => {
   }
 });
 
+// 드래그앤드롭, 메모생성, 메모삭제
 document.addEventListener('mousedown', (event) => {
   if (event.button == 2) {
     render();
@@ -66,6 +68,7 @@ document.addEventListener('mousedown', (event) => {
   }
 });
 
+// 드래그앤드롭, textarea클릭시 상단으로
 document.addEventListener('mouseup', (event) => {
   isDragging = false 
   if(event.button === 0 && event.target.tagName === 'TEXTAREA'){
