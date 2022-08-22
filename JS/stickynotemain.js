@@ -68,7 +68,7 @@ document.addEventListener('mousedown', (event) => {
   }
 });
 
-// 드래그앤드롭, textarea클릭시 상단으로
+// 드래그앤드롭, textarea클릭시 최상단으로
 document.addEventListener('mouseup', (event) => {
   isDragging = false
   if (event.button === 0 && event.target.tagName === 'TEXTAREA') {
