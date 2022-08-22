@@ -63,6 +63,7 @@ document.addEventListener('mousedown', (event) => {
   } else if (event.button === 0 && event.target.tagName === "DIV") {
     isDragging = true
     document.body.append(event.target.parentNode);
+    console.log(event.target.parentNode)
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
   }
