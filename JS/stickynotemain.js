@@ -58,20 +58,20 @@ document.addEventListener("mousemove", (event) => {
 document.addEventListener('mousedown', (event) => {
   if (event.button == 2) {
     render();
-  } else if(event.target.tagName === 'BUTTON'){
+  } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
-  } else if(event.button === 0 && event.target.tagName === "DIV"){
-      isDragging = true
-      document.body.append(event.target.parentNode);
-      findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
-      findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
+  } else if (event.button === 0 && event.target.tagName === "DIV") {
+    isDragging = true
+    document.body.append(event.target.parentNode);
+    findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
+    findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
   }
 });
 
 // 드래그앤드롭, textarea클릭시 상단으로
 document.addEventListener('mouseup', (event) => {
-  isDragging = false 
-  if(event.button === 0 && event.target.tagName === 'TEXTAREA'){
+  isDragging = false
+  if (event.button === 0 && event.target.tagName === 'TEXTAREA') {
     document.body.append(event.target.parentNode);
     event.target.focus();
   }
