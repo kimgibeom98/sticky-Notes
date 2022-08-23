@@ -47,6 +47,7 @@ function onMousedown(event) {
   } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
   } else if (event.button === 0 && event.target.tagName === 'DIV') {
+    console.log(123)
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
     isDragging = true
@@ -66,7 +67,7 @@ function onMouseup(event){
 }
 
 function onMousemove(event){
-  let targetdiv = document.querySelector('.note-box');
+  let targetdiv = document.querySelectorAll('.note-box');
   cursorx = `${event.pageX}px`;
   cursory = `${event.pageY}px`;
   if (isDragging) {
