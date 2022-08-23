@@ -4,12 +4,11 @@ let isDragging;
 let findX;
 let findY;
 let notecontent;
-let count = 1;
 
 // 메모 만드는 함수
 function render() {
   const newdiv = document.createElement("div");
-  newdiv.classList.add(`note-box${count}`);
+  newdiv.classList.add('.note-box');
 
   const topbox = document.createElement("div");
   const closebtn = document.createElement("button");
@@ -31,8 +30,8 @@ function render() {
   newdiv.style.top = cursory;
   newdiv.style.left = cursorx;
 
-  count ++;
 }
+
 
 
 // 기본 우클릭 기능제거
@@ -70,15 +69,12 @@ function onMouseup(event){
 }
 
 function onMousemove(event){
-  let targetdiv = event.target.parentNode;
-  let targetclass = document.querySelector(`.${targetdiv.className}`);
+  let movetarget = document.querySelector('body > div:last-of-type');
   cursorx = `${event.pageX}px`;
   cursory = `${event.pageY}px`;
   if (isDragging) {
-    console.log(targetclass)
-    targetclass.style.top = `${event.pageY - findY}px`;
-    targetclass.style.left = `${event.pageX - findX}px`;
-    // console.log(targetdiv.className)
+    movetarget.style.top = `${event.pageY - findY}px`;
+    movetarget.style.left = `${event.pageX - findX}px`;
   }
   notecontent = document.body.innerHTML;
   localStorage.setItem("notefull", notecontent);
