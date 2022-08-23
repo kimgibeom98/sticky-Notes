@@ -3,11 +3,12 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
+let notecontent;
 
 // 메모 만드는 함수
 function render() {
   const newdiv = document.createElement("div");
-  newdiv.classList.add(`note-box`);
+  newdiv.classList.add('note-box');
 
   const topbox = document.createElement("div");
   const closebtn = document.createElement("button");
@@ -26,16 +27,9 @@ function render() {
   newdiv.appendChild(newtextarea);
 
   document.body.appendChild(newdiv);
-  newdiv.style.top = cursorx;
-  newdiv.style.left = cursory;
-
-  let notecontent = document.body.innerHTML;
-  localStorage.setItem("notefull", notecontent);
+  newdiv.style.top = cursory;
+  newdiv.style.left = cursorx;
 }
-
-let fullbox = localStorage.getItem('notefull');
-document.body.innerHTML = fullbox;
-localStorage.clear();
 
 
 // 기본 우클릭 기능제거
@@ -43,37 +37,49 @@ document.addEventListener('contextmenu', (event) => {
   event.preventDefault();
 });
 
-// 드래그앤드롭, 마우스포인터 위치 확인
-document.addEventListener("mousemove", (event) => {
-  cursorx = `${event.pageY}px`;
-  cursory = `${event.pageX}px`;
+document.addEventListener('mousedown', onMousedown);
+document.addEventListener('mouseup', onMouseup);
+document.addEventListener('mousemove', onMousemove);
 
-  if (isDragging) {
-    event.target.parentNode.style.top = `${event.pageY - findY}px`;
-    event.target.parentNode.style.left = `${event.pageX - findX}px`;
-  }
-});
-
-// 드래그앤드롭, 메모생성, 메모삭제
-document.addEventListener('mousedown', (event) => {
+function onMousedown(event) {
   if (event.button == 2) {
     render();
   } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
-  } else if (event.button === 0 && event.target.tagName === "DIV") {
-    isDragging = true
-    document.body.append(event.target.parentNode);
-    console.log(event.target.parentNode)
+  } else if (event.button === 0 && event.target.tagName === 'DIV') {
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
+    isDragging = true
+    document.body.append(event.target.parentNode);
   }
-});
 
-// 드래그앤드롭, textarea클릭시 최상단으로
-document.addEventListener('mouseup', (event) => {
+  notecontent = document.body.innerHTML;
+  localStorage.setItem("notefull", notecontent);
+}
+
+function onMouseup(event){
   isDragging = false
   if (event.button === 0 && event.target.tagName === 'TEXTAREA') {
     document.body.append(event.target.parentNode);
     event.target.focus();
   }
-});
+}
+
+function onMousemove(event){
+  let targetdiv = document.querySelector('.note-box');
+  cursorx = `${event.pageX}px`;
+  cursory = `${event.pageY}px`;
+  if (isDragging) {
+    targetdiv.style.top = `${event.pageY - findY}px`;
+    targetdiv.style.left = `${event.pageX - findX}px`;
+    console.log(targetdiv)
+  }
+  notecontent = document.body.innerHTML;
+  localStorage.setItem("notefull", notecontent);
+}
+
+const fullbox = localStorage.getItem('notefull');
+document.body.innerHTML = fullbox;
+
+// localStorage.clear();
+
