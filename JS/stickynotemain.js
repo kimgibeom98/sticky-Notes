@@ -32,8 +32,6 @@ function render() {
 
 }
 
-
-
 // 기본 우클릭 기능제거
 document.addEventListener('contextmenu', (event) => {
   event.preventDefault();
@@ -49,13 +47,11 @@ function onMousedown(event) {
   } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
   } else if (event.button === 0 && event.target.tagName === 'DIV') {
-    console.log(123)
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
     isDragging = true
     document.body.append(event.target.parentNode);
   }
-
   notecontent = document.body.innerHTML;
   localStorage.setItem("notefull", notecontent);
 }
@@ -69,12 +65,12 @@ function onMouseup(event){
 }
 
 function onMousemove(event){
-  let movetarget = document.querySelector('body > div:last-of-type');
+  const movetarget = document.querySelector('body > div:last-of-type');
   cursorx = `${event.pageX}px`;
   cursory = `${event.pageY}px`;
   if (isDragging) {
-    movetarget.style.top = `${event.pageY - findY}px`;
-    movetarget.style.left = `${event.pageX - findX}px`;
+    movetarget.style.top = `${event.pageY - findY - 8}px`;
+    movetarget.style.left = `${event.pageX - findX - 8}px`;
   }
   notecontent = document.body.innerHTML;
   localStorage.setItem("notefull", notecontent);
