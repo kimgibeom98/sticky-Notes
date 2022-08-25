@@ -3,9 +3,9 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
-let notecontent;
+let savenote;
 
-function render() {
+function createMemo() {
   const createDiv = document.createElement("div");
   const headbox = document.createElement("div");
   const closebtn = document.createElement("button");
@@ -26,7 +26,7 @@ function render() {
 
 function onMousedown(event) {
   if (event.button == 2) {
-    render();
+    createMemo();
   } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
   } else if (event.button === 0 && event.target.tagName === 'DIV') {
@@ -35,8 +35,8 @@ function onMousedown(event) {
     isDragging = true
     document.body.append(event.target.parentNode);
   }
-  notecontent = document.body.innerHTML;
-  localStorage.setItem("notefull", notecontent);
+  savenote = document.body.innerHTML;
+  localStorage.setItem("stickynote", savenote);
 }
 
 function onMouseup(event){
@@ -55,12 +55,12 @@ function onMousemove(event){
     movetarget.style.top = `${event.pageY - findY - 8}px`;
     movetarget.style.left = `${event.pageX - findX - 8}px`;
   }
-  notecontent = document.body.innerHTML;
-  localStorage.setItem("notefull", notecontent);
+  savenote = document.body.innerHTML;
+  localStorage.setItem("stickynote", savenote);
 }
 
-const fullbox = localStorage.getItem('notefull');
-document.body.innerHTML = fullbox;
+const savekey = localStorage.getItem('stickynote');
+document.body.innerHTML = savekey;
 
 document.addEventListener('contextmenu', (event) => {event.preventDefault();});
 document.addEventListener('mousedown', onMousedown);
