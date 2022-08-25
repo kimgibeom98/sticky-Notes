@@ -5,41 +5,24 @@ let findX;
 let findY;
 let notecontent;
 
-// 메모 만드는 함수
 function render() {
-  const newdiv = document.createElement("div");
-  newdiv.classList.add('.note-box');
-
-  const topbox = document.createElement("div");
+  const createDiv = document.createElement("div");
+  const headbox = document.createElement("div");
   const closebtn = document.createElement("button");
   const closetxt = document.createTextNode('X');
-
-  topbox.classList.add('move-div');
-
-  closebtn.appendChild(closetxt);
-  closebtn.classList.add(`close-btn`);
-
   const newtextarea = document.createElement("textarea");
-  newtextarea.placeholder = '메모를 입력하세요...';
 
-  newdiv.appendChild(topbox);
-  newdiv.appendChild(closebtn);
-  newdiv.appendChild(newtextarea);
-
-  document.body.appendChild(newdiv);
-  newdiv.style.top = cursory;
-  newdiv.style.left = cursorx;
-
+  newtextarea.placeholder = '메모를 입력하세요...';  
+  
+  closebtn.appendChild(closetxt);
+  createDiv.appendChild(headbox);
+  createDiv.appendChild(closebtn);
+  createDiv.appendChild(newtextarea);
+  document.body.appendChild(createDiv);
+  
+  createDiv.style.top = cursory;
+  createDiv.style.left = cursorx;
 }
-
-// 기본 우클릭 기능제거
-document.addEventListener('contextmenu', (event) => {
-  event.preventDefault();
-});
-
-document.addEventListener('mousedown', onMousedown);
-document.addEventListener('mouseup', onMouseup);
-document.addEventListener('mousemove', onMousemove);
 
 function onMousedown(event) {
   if (event.button == 2) {
@@ -79,5 +62,7 @@ function onMousemove(event){
 const fullbox = localStorage.getItem('notefull');
 document.body.innerHTML = fullbox;
 
-localStorage.clear();
-
+document.addEventListener('contextmenu', (event) => {event.preventDefault();});
+document.addEventListener('mousedown', onMousedown);
+document.addEventListener('mouseup', onMouseup);
+document.addEventListener('mousemove', onMousemove);
