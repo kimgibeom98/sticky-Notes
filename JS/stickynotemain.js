@@ -13,30 +13,12 @@ function render(){
     const addnote = document.querySelector('body').innerHTML = arr.map((content) => `<div style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.width}px;"></textarea></div>`);
 }
 
-function createMemo() {
-  // const createDiv = document.createElement("div");
-  // const headbox = document.createElement("div");
-  // const closebtn = document.createElement("button");
-  // const closetxt = document.createTextNode('X');
-  // const newtextarea = document.createElement("textarea");
 
-  // newtextarea.placeholder = '메모를 입력하세요...';  
-  
-  // closebtn.appendChild(closetxt);
-  // createDiv.appendChild(headbox);
-  // createDiv.appendChild(closebtn);
-  // createDiv.appendChild(newtextarea);
-  // document.body.appendChild(createDiv);
-  
-  // createDiv.style.top = cursory;
-  // createDiv.style.left = cursorx;
-  arr.push({width : 200, height : 116, left : cursorx, top : cursory})
-  render();
-}
 
 function onMousedown(event) {
   if (event.button == 2) {
-    createMemo();
+    arr.push({width : 200, height : 116, left : cursorx, top : cursory})
+    render();
   } else if (event.target.tagName === 'BUTTON') {
     console.log(arr)
     event.target.parentNode.remove();
