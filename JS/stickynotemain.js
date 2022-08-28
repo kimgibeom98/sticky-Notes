@@ -11,8 +11,8 @@ let arr = []
 
 function render(){
     data =  document.querySelector('body').innerHTML = arr.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
-    console.log(data)
-}
+    console.log(data, arr)
+  }
 
 function onMousedown(event) {
   if (event.button == 2){
@@ -25,6 +25,15 @@ function onMousedown(event) {
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
     isDragging = true
     document.body.append(event.target.parentNode);
+
+    const countbox = document.querySelector('.note-box > textarea')
+    for(let i = 0; i < countbox.length; i++){
+      data = [];
+      arr = [];
+      console.log(data)
+      arr.push({width : countbox.offsetWidth, height : countbox.offsetHeight, left : countbox.parentNode.getBoundingClientRect().left, top : countbox.parentNode.getBoundingClientRect().top})
+      // render();
+    }
   }
 
   localStorage.setItem("stickynote", data);
