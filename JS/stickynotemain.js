@@ -3,40 +3,41 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
+let savenote;
+const data = [];
 
-let data;
-let arr = []
+function createMemo() {
+  const createDiv = document.createElement("div");
+  const headbox = document.createElement("div");
+  const closebtn = document.createElement("button");
+  const closetxt = document.createTextNode('X');
+  const newtextarea = document.createElement("textarea");
 
-// localStorage.setItem("key", data);
-
-function render(){
-    data =  document.querySelector('body').innerHTML = arr.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
-    console.log(data, arr)
-  }
+  newtextarea.placeholder = '메모를 입력하세요...';  
+  createDiv.classList.add('note-box');
+  closebtn.appendChild(closetxt);
+  createDiv.appendChild(headbox);
+  createDiv.appendChild(closebtn);
+  createDiv.appendChild(newtextarea);
+  document.body.appendChild(createDiv);
+  
+  createDiv.style.top = cursory;
+  createDiv.style.left = cursorx;
+}
 
 function onMousedown(event) {
-  if (event.button == 2){
-    arr.push({width : 200, height : 116, left : cursorx, top : cursory})
-    render();
-  }else if (event.target.tagName === 'BUTTON') {
+  if (event.button == 2) {
+    createMemo();
+  } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
   } else if (event.button === 0 && event.target.tagName === 'DIV') {
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().top;
     isDragging = true
     document.body.append(event.target.parentNode);
-
-    const countbox = document.querySelector('.note-box > textarea')
-    for(let i = 0; i < countbox.length; i++){
-      data = [];
-      arr = [];
-      console.log(data)
-      arr.push({width : countbox.offsetWidth, height : countbox.offsetHeight, left : countbox.parentNode.getBoundingClientRect().left, top : countbox.parentNode.getBoundingClientRect().top})
-      // render();
-    }
   }
-
-  localStorage.setItem("stickynote", data);
+  savenote = document.body.innerHTML;
+  localStorage.setItem("stickynote", savenote);
 }
 
 function onMouseup(event){
@@ -49,29 +50,22 @@ function onMouseup(event){
 
 function onMousemove(event){
   const movetarget = document.querySelector('body > div:last-of-type');
-  cursorx = `${event.pageX}`;
-  cursory = `${event.pageY}`;
+  cursorx = `${event.pageX}px`;
+  cursory = `${event.pageY}px`;
   if (isDragging) {
     movetarget.style.top = `${event.pageY - findY - 8}px`;
     movetarget.style.left = `${event.pageX - findX - 8}px`;
   }
-
-  localStorage.setItem("stickynote", data);
+  savenote = document.body.innerHTML;
+  localStorage.setItem("stickynote", savenote);
 }
 
 function onKeydown(event){
   if(event.target.tagName === 'TEXTAREA'){
-    resizeEvent(event);
-    // arr.push(`<div style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;">${event.tagName.value}</textarea></div>`)
+    const findbox = document.querySelector('body > div');
+    data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
   }
-}
-
-function resizeEvent(event){
-  // arr = [];
-  for(let i = 0; data.length; i++){
-      arr.push(width.offsetWidth, height.data[i].offsetHeight, left.data[i].getBoundingClientRect().left, top.getBoundingClientRect().top, contents.event.target.value)
-  }
-  console.log(arr)
+  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 const savekey = localStorage.getItem('stickynote');
