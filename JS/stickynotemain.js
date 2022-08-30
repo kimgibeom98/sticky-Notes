@@ -4,30 +4,17 @@ let isDragging;
 let findX;
 let findY;
 let savenote;
-const data = [];
+const data = localStorage.getItem('stickynote') ?? [];
 
-function createMemo() {
-  const createDiv = document.createElement("div");
-  const headbox = document.createElement("div");
-  const closebtn = document.createElement("button");
-  const closetxt = document.createTextNode('X');
-  const newtextarea = document.createElement("textarea");
 
-  newtextarea.placeholder = '메모를 입력하세요...';  
-  createDiv.classList.add('note-box');
-  closebtn.appendChild(closetxt);
-  createDiv.appendChild(headbox);
-  createDiv.appendChild(closebtn);
-  createDiv.appendChild(newtextarea);
-  document.body.appendChild(createDiv);
-  
-  createDiv.style.top = cursory;
-  createDiv.style.left = cursorx;
+function render(){
+  document.querySelector('body').innerHTML = arr.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
   if (event.button == 2) {
-    createMemo();
+    arr.push({width : 200, height : 116, left : cursorx, top : cursory})
+    render();
   } else if (event.target.tagName === 'BUTTON') {
     event.target.parentNode.remove();
   } else if (event.button === 0 && event.target.tagName === 'DIV') {
@@ -62,14 +49,10 @@ function onMousemove(event){
 
 function onKeydown(event){
   if(event.target.tagName === 'TEXTAREA'){
-    const findbox = document.querySelectorAll('body > div');
-    for(let i = 0 ; i < findbox.length; i++){
-      console.log()
-    }
     data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
   }
-  // document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
+
 
 const savekey = localStorage.getItem('stickynote');
 document.body.innerHTML = savekey;
@@ -78,4 +61,4 @@ document.addEventListener('contextmenu', (event) => {event.preventDefault();});
 document.addEventListener('mousedown', onMousedown);
 document.addEventListener('mouseup', onMouseup);
 document.addEventListener('mousemove', onMousemove);
-document.addEventListener('keydown', onKeydown);
+document.addEventListener('keyup', onKeydown);
