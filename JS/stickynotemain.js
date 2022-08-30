@@ -62,10 +62,13 @@ function onMousemove(event){
 
 function onKeydown(event){
   if(event.target.tagName === 'TEXTAREA'){
-    const findbox = document.querySelector('body > div');
+    const findbox = document.querySelectorAll('body > div');
+    for(let i = 0 ; i < findbox.length; i++){
+      console.log()
+    }
     data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
   }
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
+  // document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 const savekey = localStorage.getItem('stickynote');
