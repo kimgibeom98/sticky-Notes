@@ -4,19 +4,21 @@ let isDragging;
 let findX;
 let findY;
 let savenote;
-let data = [];
+const data = [];
 // data = localStorage.getItem('stickynote') ?? [];
 
 
 function render(){
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}px; top:${content.top}px"><div></div><button>X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
+  // console.log(cursorx)
+  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
   if (event.button == 2) {
     data.push({width : 200, height : 116, left : cursorx, top : cursory})
+    console.log(cursorx)
     render();
-  } else if (event.target.tagName === 'BUTTON') {
+  } else if (event.target.getAttribute('class') === 'clost-btn') {
     event.target.parentNode.remove();
   } else if (event.button === 0 && event.target.tagName === 'DIV') {
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().left;
