@@ -10,7 +10,7 @@ const data = [];
 
 function render(){
   // console.log(cursorx)
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
+  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
@@ -32,7 +32,7 @@ function onMousedown(event) {
 
 function onMouseup(event){
   isDragging = false
-  if (event.button === 0 && event.target.tagName === 'TEXTAREA') {
+  if (event.button === 0 && event.target.getAttribute('class') === 'content-box') {
     document.body.append(event.target.parentNode);
     event.target.focus();
   }
@@ -51,7 +51,7 @@ function onMousemove(event){
 }
 
 function onKeyup(event){
-  if(event.target.tagName === 'TEXTAREA'){
+  if(event.target.getAttribute('class') === 'content-box'){
     data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
   }
 }
