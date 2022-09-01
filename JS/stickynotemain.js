@@ -3,8 +3,8 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
-// const data = [];
-const data = localStorage.getItem('stickynote') ?? [];
+const data = [];
+// const data = localStorage.getItem('stickynote') ?? [];
 
 function render(){
   document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
@@ -52,7 +52,9 @@ function onKeyup(event){
 }
 
 
-document.body.innerHTML = data;
+// document.body.innerHTML = data;
+
+render();
 
 document.addEventListener('contextmenu', (event) => {event.preventDefault();});
 document.addEventListener('mousedown', onMousedown);
