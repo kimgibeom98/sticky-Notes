@@ -3,16 +3,20 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
+let count = 1;
 const data = [];
 // const data = localStorage.getItem('stickynote') ?? [];
 
 function render(){
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
+  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div data-index=${content.indexnum}></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
+  const eventindex = event.target.dataset.index;
+  console.log(eventindex)
   if (event.button == 2) {
-    data.push({width : 200, height : 116, left : cursorx, top : cursory})
+    data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count})
+    count ++;
     render();
   } else if (event.target.getAttribute('class') === 'clost-btn') {
     event.target.parentNode.remove();
