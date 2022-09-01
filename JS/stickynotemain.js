@@ -10,7 +10,7 @@ const data = [];
 
 function render(){
   // console.log(cursorx)
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
+  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
