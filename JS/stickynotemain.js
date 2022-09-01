@@ -3,20 +3,16 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
-let savenote;
-const data = [];
-// data = localStorage.getItem('stickynote') ?? [];
-
+// const data = [];
+const data = localStorage.getItem('stickynote') ?? [];
 
 function render(){
-  // console.log(cursorx)
   document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
   if (event.button == 2) {
     data.push({width : 200, height : 116, left : cursorx, top : cursory})
-    console.log(cursorx)
     render();
   } else if (event.target.getAttribute('class') === 'clost-btn') {
     event.target.parentNode.remove();
@@ -26,8 +22,7 @@ function onMousedown(event) {
     isDragging = true
     document.body.append(event.target.parentNode);
   }
-  savenote = document.body.innerHTML;
-  localStorage.setItem("stickynote", savenote);
+  localStorage.setItem("stickynote", data);
 }
 
 function onMouseup(event){
@@ -57,8 +52,7 @@ function onKeyup(event){
 }
 
 
-const savekey = localStorage.getItem('stickynote');
-document.body.innerHTML = savekey;
+document.body.innerHTML = data;
 
 document.addEventListener('contextmenu', (event) => {event.preventDefault();});
 document.addEventListener('mousedown', onMousedown);
