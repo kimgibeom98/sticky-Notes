@@ -12,12 +12,6 @@ function render(){
 }
 
 function onMousedown(event) {
-  const eventindex = event.target.dataset.index;
-  const targetElemet = data.find((i) => i.index === eventindex);
-
-  const chagedata = {width : event.target}
-  data.splice(eventindex - 1, 0, )
-
   if (event.button == 2) {
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count})
     count ++;
@@ -34,6 +28,12 @@ function onMousedown(event) {
 }
 
 function onMouseup(event){
+  const eventindex = event.target.dataset.index;
+  // const targetElemet = data.find((i) => i.index === eventindex);
+  const chagedata = {width : 300, height : 500, left : event.target.parentNode.getBoundingClientRect().left, top : event.target.parentNode.getBoundingClientRect().top, indexnum : eventindex}
+  data.splice(eventindex - 1, 0, chagedata)
+  console.log(data)
+  
   isDragging = false
   if (event.button === 0 && event.target.getAttribute('class') === 'content-box') {
     document.body.append(event.target.parentNode);
