@@ -3,20 +3,22 @@ let cursory;
 let isDragging;
 let findX;
 let findY;
-let count = 1;
+let count = 0;
 const data = [];
 // const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div data-index=${content.indexnum}></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
+  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left};  top:${content.top}"><div data-index=${content.indexnum}></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
 }
 
 function onMousedown(event) {
   const eventindex = event.target.dataset.index;
   const targetElemet = data.find((i) => i.index === eventindex);
-  
+
+  const chagedata = {width : event.target}
+  data.splice(eventindex - 1, 0, )
+
   if (event.button == 2) {
-    console.log(data)
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count})
     count ++;
     render();
@@ -29,7 +31,6 @@ function onMousedown(event) {
     document.body.append(event.target.parentNode);
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
- 
 }
 
 function onMouseup(event){
@@ -56,9 +57,6 @@ function onKeyup(event){
     // data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
   }
 }
-
-
-// document.body.innerHTML = data;
 
 render();
 
