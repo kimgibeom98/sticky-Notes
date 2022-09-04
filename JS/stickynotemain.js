@@ -5,7 +5,7 @@ let findX;
 let findY;
 let count = 1;
 const data = [];
-// const data = localStorage.getItem('stickynote') ?? [];
+// const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
   document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" style="left:${content.left}; top:${content.top}"><div data-index=${content.indexnum}></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
@@ -13,8 +13,10 @@ function render(){
 
 function onMousedown(event) {
   const eventindex = event.target.dataset.index;
-  console.log(eventindex)
+  const targetElemet = data.find((i) => i.index === eventindex);
+  
   if (event.button == 2) {
+    console.log(data)
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count})
     count ++;
     render();
@@ -26,7 +28,8 @@ function onMousedown(event) {
     isDragging = true
     document.body.append(event.target.parentNode);
   }
-  localStorage.setItem("stickynote", data);
+  localStorage.setItem("stickynote", JSON.stringify(data));
+ 
 }
 
 function onMouseup(event){
@@ -45,13 +48,12 @@ function onMousemove(event){
     movetarget.style.top = `${event.pageY - findY - 8}px`;
     movetarget.style.left = `${event.pageX - findX - 8}px`;
   }
-  savenote = document.body.innerHTML;
-  localStorage.setItem("stickynote", savenote);
+  localStorage.setItem("stickynote", data);
 }
 
 function onKeyup(event){
   if(event.target.getAttribute('class') === 'content-box'){
-    data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
+    // data.push({width : event.target.offsetWidth, height : event.target.offsetHeight, left : findbox.getBoundingClientRect().left, top : findbox.getBoundingClientRect().top} );
   }
 }
 
