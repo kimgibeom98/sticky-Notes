@@ -18,16 +18,15 @@ function onMousedown(event) {
     render();
     
   } else if (event.target.getAttribute('class') === 'clost-btn') {
-    event.target.parentNode.remove();
     const eventindex = Number(event.target.parentNode.dataset.index);
-    
     for(let i = 0; i < data.length; i++){  
       if (data[i].indexnum === eventindex) { 
         data.splice(i, 1); 
         i--; 
       }
     }
-    console.log(data)
+    localStorage.setItem("stickynote", JSON.stringify(data));
+    render();
     // console.log(eventindex)
     // const targetElemet = data.find((i) => i.index === eventindex);
     // const chagedata = {width : 300, height : 500, left : event.target.parentNode.getBoundingClientRect().left, top : event.target.parentNode.getBoundingClientRect().top, indexnum : eventindex}
