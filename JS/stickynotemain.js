@@ -4,8 +4,8 @@ let isDragging;
 let findX;
 let findY;
 let count = 0;
-// const data = [];
-const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
+const data = [];
+// const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
   document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;"></textarea></div>`);
@@ -16,18 +16,18 @@ function onMousedown(event) {
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count})
     count ++;
     render();
+    
   } else if (event.target.getAttribute('class') === 'clost-btn') {
     event.target.parentNode.remove();
     const eventindex = Number(event.target.parentNode.dataset.index);
     
-    for(var i = 0; i < data.length; i++){  
-      console.log(data)
-      if (data.indexOf(data[i]) === eventindex) { 
+    for(let i = 0; i < data.length; i++){  
+      if (data[i].indexnum === eventindex) { 
         data.splice(i, 1); 
         i--; 
       }
     }
-    localStorage.setItem("stickynote", JSON.stringify(data));
+    console.log(data)
     // console.log(eventindex)
     // const targetElemet = data.find((i) => i.index === eventindex);
     // const chagedata = {width : 300, height : 500, left : event.target.parentNode.getBoundingClientRect().left, top : event.target.parentNode.getBoundingClientRect().top, indexnum : eventindex}
