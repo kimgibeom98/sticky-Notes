@@ -44,14 +44,8 @@ function onMouseup(event){
   }else if(event.button === 0 && event.target.getAttribute('class') === 'move-box'){
     const targetIndex = Number(event.target.parentNode.dataset.index)
     const targetNote = event.target.nextSibling.nextSibling;
-    const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left, top : event.target.parentNode.getBoundingClientRect().top, indexnum : targetIndex}
-    for(let i = 0; i < data.length; i++){  
-      if (data[i].indexnum === targetIndex) { 
-        data.splice(i, 1); 
-        i--; 
-      }
-    }
-    console.log(data)
+    const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex}
+    data.splice(targetIndex, 1, chagedata)
   }
 }
 
