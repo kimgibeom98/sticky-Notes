@@ -39,6 +39,17 @@ function onMousedown(event) {
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().y;
     isDragging = true
     document.body.append(event.target.parentNode);
+
+    // const eventindex = Number(event.target.parentNode.dataset.index);
+    // const targetElement = data.find( element => element.indexnum === eventindex)
+    // for(let i = 0; i < data.length; i++){  
+    //   if (data[i].indexnum === eventindex) { 
+    //     data.splice(i, 1); 
+    //     i--; 
+    //   }
+    // }
+    // data.push(targetElement);
+    
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
