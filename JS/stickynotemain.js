@@ -7,15 +7,12 @@ let count = 0;
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
-
   document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);
   console.log(data)
-
 }
 
 function onMousedown(event) {
   if (event.button == 2) {
-
     count =  JSON.parse(localStorage.getItem('indexNumber')) ?? 0;
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count, textbox : ''})
     render();
@@ -37,14 +34,11 @@ function onMousedown(event) {
       count == 0;
       localStorage.setItem("indexNumber", JSON.stringify(count));
     }
-
   } else if (event.button === 0 && event.target.getAttribute('class') === 'move-box') {
-
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().x;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().y;
     isDragging = true
     document.body.append(event.target.parentNode);
-    
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
