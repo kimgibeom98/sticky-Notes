@@ -4,6 +4,7 @@ let isDragging;
 let findX;
 let findY;
 let count = 0;
+// const data = []
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
@@ -20,7 +21,6 @@ function onMousedown(event) {
     localStorage.setItem("indexNumber", JSON.stringify(count));
 
   } else if (event.target.getAttribute('class') === 'clost-btn') {
-
     const eventindex = Number(event.target.parentNode.dataset.index);
     for(let i = 0; i < data.length; i++){  
       if (data[i].indexnum === eventindex) { 
@@ -31,7 +31,7 @@ function onMousedown(event) {
     localStorage.setItem("stickynote", JSON.stringify(data));
     render();
     if(data.length === 0){
-      count == 0;
+      count = 0;
       localStorage.setItem("indexNumber", JSON.stringify(count));
     }
   } else if (event.button === 0 && event.target.getAttribute('class') === 'move-box') {
@@ -39,16 +39,6 @@ function onMousedown(event) {
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().y;
     isDragging = true
     document.body.append(event.target.parentNode);
-
-    // const eventindex = Number(event.target.parentNode.dataset.index);
-    // const targetElement = data.find( element => element.indexnum === eventindex)
-    // for(let i = 0; i < data.length; i++){  
-    //   if (data[i].indexnum === eventindex) { 
-    //     data.splice(i, 1); 
-    //     i--; 
-    //   }
-    // }
-    // data.push(targetElement);
     
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
@@ -72,8 +62,17 @@ function onMouseup(event){
     const targetValue = event.target.nextSibling.nextSibling.value; 
     const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
     data.splice(targetIndex, 1, chagedata)
-    console.log(chagedata)
-
+    
+    const targetElement = data.find( element => element.indexnum === targetIndex);
+    for(let i = 0; i < data.length; i++){  
+      if (data[i].indexnum === targetIndex) {
+        data.splice(i, 1); 
+        i--; 
+      }
+    }
+    console.log(data)
+    data.push(targetElement);
+    console.log(data)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
@@ -101,7 +100,6 @@ function onKeyup(event){
     data.splice(targetIndex, 1, chagedata)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
-  console.log(data)
 
 }
 
