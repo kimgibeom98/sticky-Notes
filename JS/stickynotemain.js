@@ -55,14 +55,6 @@ function onMouseup(event){
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
     data.splice(targetIndex, 1, chagedata)
 
-  }else if(event.button === 0 && event.target.getAttribute('class') === 'move-box'){
-
-    const targetIndex = Number(event.target.parentNode.dataset.index)
-    const targetNote = event.target.nextSibling.nextSibling;
-    const targetValue = event.target.nextSibling.nextSibling.value; 
-    const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
-    data.splice(targetIndex, 1, chagedata)
-    
     const targetElement = data.find( element => element.indexnum === targetIndex);
     for(let i = 0; i < data.length; i++){  
       if (data[i].indexnum === targetIndex) {
@@ -70,9 +62,24 @@ function onMouseup(event){
         i--; 
       }
     }
-    console.log(data)
     data.push(targetElement);
-    console.log(data)
+
+  }else if(event.button === 0 && event.target.getAttribute('class') === 'move-box'){
+
+    const targetIndex = Number(event.target.parentNode.dataset.index)
+    const targetNote = event.target.nextSibling.nextSibling;
+    const targetValue = event.target.nextSibling.nextSibling.value; 
+    const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
+    data.splice(targetIndex, 1, chagedata)
+
+    const targetElement = data.find( element => element.indexnum === targetIndex);
+    for(let i = 0; i < data.length; i++){  
+      if (data[i].indexnum === targetIndex) {
+        data.splice(i, 1); 
+        i--; 
+      }
+    }
+    data.push(targetElement);
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
