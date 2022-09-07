@@ -4,12 +4,10 @@ let isDragging;
 let findX;
 let findY;
 let count = 0;
-// const data = []
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
   document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);
-  console.log(data)
 }
 
 function onMousedown(event) {
@@ -19,9 +17,9 @@ function onMousedown(event) {
     render();
     count ++;
     localStorage.setItem("indexNumber", JSON.stringify(count));
-
   } else if (event.target.getAttribute('class') === 'clost-btn') {
     const eventindex = Number(event.target.parentNode.dataset.index);
+    console.log(eventindex)
     for(let i = 0; i < data.length; i++){  
       if (data[i].indexnum === eventindex) { 
         data.splice(i, 1); 
@@ -39,7 +37,6 @@ function onMousedown(event) {
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().y;
     isDragging = true
     document.body.append(event.target.parentNode);
-    
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
@@ -47,64 +44,56 @@ function onMousedown(event) {
 function onMouseup(event){
   isDragging = false
   if (event.button === 0 && event.target.getAttribute('class') === 'content-box') {
-
     document.body.append(event.target.parentNode);
     event.target.focus();
     const targetIndex = Number(event.target.parentNode.dataset.index)
+    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
     const targetValue = event.target.value; 
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
-    data.splice(targetIndex, 1, chagedata)
-
-    const targetElement = data.find( element => element.indexnum === targetIndex);
-    for(let i = 0; i < data.length; i++){  
-      if (data[i].indexnum === targetIndex) {
-        data.splice(i, 1); 
-        i--; 
+      if(data.indexOf(data[data.length -1]) === findIndex){
+        data.pop();
+        data.push(chagedata)
+      }else{
+        data.splice(findIndex, 1)
+        data.push(chagedata)
       }
-    }
-    data.push(targetElement);
-
   }else if(event.button === 0 && event.target.getAttribute('class') === 'move-box'){
-
     const targetIndex = Number(event.target.parentNode.dataset.index)
+    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+    
     const targetNote = event.target.nextSibling.nextSibling;
     const targetValue = event.target.nextSibling.nextSibling.value; 
     const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
-    data.splice(targetIndex, 1, chagedata)
-
-    const targetElement = data.find( element => element.indexnum === targetIndex);
-    for(let i = 0; i < data.length; i++){  
-      if (data[i].indexnum === targetIndex) {
-        data.splice(i, 1); 
-        i--; 
-      }
+    if(data.indexOf(data[data.length -1]) === findIndex){
+      data.pop();
+      data.push(chagedata)
+    }else{
+      data.splice(findIndex, 1)
+      data.push(chagedata)
     }
-    data.push(targetElement);
+    console.log(event.target.parentNode.getBoundingClientRect().left)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 function onMousemove(event){
-
   const movetarget = document.querySelector('body > div:last-of-type');
   cursorx = `${event.pageX}px`;
   cursory = `${event.pageY}px`;
   if (isDragging) {
-    movetarget.style.top = `${event.pageY - findY - 8}px`;
-    movetarget.style.left = `${event.pageX - findX - 8}px`;
+    movetarget.style.top = `${event.pageY - findY}px`;
+    movetarget.style.left = `${event.pageX - findX}px`;
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
-  
 }
 
 function onKeyup(event){
-
-  let tareetValue;
   if(event.target.getAttribute('class') === 'content-box'){
     const targetIndex = Number(event.target.parentNode.dataset.index)
-    tareetValue = event.target.value 
+    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+    const tareetValue = event.target.value 
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : tareetValue}
-    data.splice(targetIndex, 1, chagedata)
+    data.splice(findIndex, 1, chagedata)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 
