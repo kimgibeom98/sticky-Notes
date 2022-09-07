@@ -59,7 +59,6 @@ function onMouseup(event){
   }else if(event.button === 0 && event.target.getAttribute('class') === 'move-box'){
     const targetIndex = Number(event.target.parentNode.dataset.index)
     const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-    
     const targetNote = event.target.nextSibling.nextSibling;
     const targetValue = event.target.nextSibling.nextSibling.value; 
     const chagedata = {width : targetNote.offsetWidth, height : targetNote.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
@@ -94,6 +93,11 @@ function onKeyup(event){
     data.splice(findIndex, 1, chagedata)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
+
+}
+
+// 배열 바꾸는 함수
+function changeArr(){
 
 }
 
