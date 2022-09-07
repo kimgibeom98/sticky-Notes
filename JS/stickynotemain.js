@@ -7,7 +7,7 @@ let count = 0;
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
-  document.querySelector('body').innerHTML = data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);
+  document.querySelector('body').innerHTML =  data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);  
 }
 
 function onMousedown(event) {
