@@ -19,7 +19,6 @@ function onMousedown(event) {
     localStorage.setItem("indexNumber", JSON.stringify(count));
   } else if (event.target.getAttribute('class') === 'clost-btn') {
     const eventindex = Number(event.target.parentNode.dataset.index);
-    console.log(eventindex)
     for(let i = 0; i < data.length; i++){  
       if (data[i].indexnum === eventindex) { 
         data.splice(i, 1); 
@@ -71,7 +70,6 @@ function onMouseup(event){
       data.splice(findIndex, 1)
       data.push(chagedata)
     }
-    console.log(event.target.parentNode.getBoundingClientRect().left)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
