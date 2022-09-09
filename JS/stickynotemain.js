@@ -25,12 +25,11 @@ function onMousedown(event) {
         i--; 
       }
     }
-    localStorage.setItem("stickynote", JSON.stringify(data));
-    render();
     if(data.length === 0){
       count = 0;
       localStorage.setItem("indexNumber", JSON.stringify(count));
     }
+    render();
   } else if (event.button === 0 && event.target.getAttribute('class') === 'move-box') {
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().x;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().y;
@@ -94,13 +93,6 @@ function onKeyup(event){
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 
-}
-
-// 배열 바꾸는 함수
-function changeArr(){
-  const targetIndex = Number(event.target.parentNode.dataset.index)
-  const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-  const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : tareetValue}
 }
 
 render();
