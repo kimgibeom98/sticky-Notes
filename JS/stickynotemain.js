@@ -98,7 +98,9 @@ function onKeyup(event){
 
 // 배열 바꾸는 함수
 function changeArr(){
-
+  const targetIndex = Number(event.target.parentNode.dataset.index)
+  const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+  const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : tareetValue}
 }
 
 render();
