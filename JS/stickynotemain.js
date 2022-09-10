@@ -82,8 +82,8 @@ function onKeyup(event){
   if(event.target.getAttribute('class') === 'content-box'){
     targetIndex = Number(event.target.parentNode.dataset.index)
     const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-    const tareetValue = event.target.value 
-    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : tareetValue}
+    const targetValue = event.target.value 
+    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : targetValue}
     data.splice(findIndex, 1, chagedata)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
