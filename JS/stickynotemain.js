@@ -46,10 +46,8 @@ function onMouseup(event){
   const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
   const targetValue = event.target.value; 
   let chagedata;
-
   if (event.button === 0 && event.target.getAttribute('class') === 'content-box' || event.button === 0 && event.target.getAttribute('class') === 'move-box') {
     if(event.button === 0 && event.target.getAttribute('class') === 'content-box'){
-      console.log(event.target.parentNode)
       document.body.append(event.target.parentNode);
       event.target.focus();
       chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
@@ -89,7 +87,6 @@ function onKeyup(event){
     data.splice(findIndex, 1, chagedata)
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
-
 }
 
 render();
