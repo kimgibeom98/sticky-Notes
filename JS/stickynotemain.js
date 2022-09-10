@@ -4,6 +4,7 @@ let isDragging;
 let findX;
 let findY;
 let count = 0;
+let targetIndex;
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
@@ -18,9 +19,9 @@ function onMousedown(event) {
     count ++;
     localStorage.setItem("indexNumber", JSON.stringify(count));
   } else if (event.target.getAttribute('class') === 'clost-btn') {
-    const eventindex = Number(event.target.parentNode.dataset.index);
+    targetIndex = Number(event.target.parentNode.dataset.index);
     for(let i = 0; i < data.length; i++){  
-      if (data[i].indexnum === eventindex) { 
+      if (data[i].indexnum === targetIndex) { 
         data.splice(i, 1); 
         i--; 
       }
@@ -41,7 +42,7 @@ function onMousedown(event) {
 
 function onMouseup(event){
   isDragging = false
-  const targetIndex = Number(event.target.parentNode.dataset.index)
+  targetIndex = Number(event.target.parentNode.dataset.index)
   const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
   const targetValue = event.target.value; 
   let chagedata;
@@ -81,7 +82,7 @@ function onMousemove(event){
 
 function onKeyup(event){
   if(event.target.getAttribute('class') === 'content-box'){
-    const targetIndex = Number(event.target.parentNode.dataset.index)
+    targetIndex = Number(event.target.parentNode.dataset.index)
     const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
     const tareetValue = event.target.value 
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : tareetValue}
