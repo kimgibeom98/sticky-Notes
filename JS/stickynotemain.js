@@ -8,11 +8,11 @@ let targetIndex;
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 function render(){
-  document.querySelector('body').innerHTML =  data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);  
+  document.querySelector('body').innerHTML =  data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea oncontextmenu='return true' placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);  
 }
 
 function onMousedown(event) {
-  if (event.button == 2) {
+  if (event.button == 2 && event.target.getAttribute('class') != 'content-box') {
     count =  JSON.parse(localStorage.getItem('indexNumber')) ?? 0;
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count, textbox : ''})
     render();
@@ -48,6 +48,7 @@ function onMouseup(event){
   let chagedata;
   if (event.button === 0 && event.target.getAttribute('class') === 'content-box' || event.button === 0 && event.target.getAttribute('class') === 'move-box') {
     if(event.button === 0 && event.target.getAttribute('class') === 'content-box'){
+      event.target.unbind();
       document.body.append(event.target.parentNode);
       event.target.focus();
       chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().x + 'px', top : event.target.parentNode.getBoundingClientRect().y + 'px', indexnum : targetIndex,  textbox : targetValue}
@@ -62,6 +63,7 @@ function onMouseup(event){
     }else{
       data.splice(findIndex, 1)
       data.push(chagedata)
+
     }
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
@@ -91,7 +93,9 @@ function onKeyup(event){
 
 render();
 
-document.addEventListener('contextmenu', (event) => {event.preventDefault();});
+document.addEventListener('contextmenu', (event) => {
+  event.preventDefault();}
+);
 document.addEventListener('mousedown', onMousedown);
 document.addEventListener('mouseup', onMouseup);
 document.addEventListener('mousemove', onMousemove);
