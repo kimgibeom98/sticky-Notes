@@ -13,7 +13,7 @@ function render(){
 }
 
 function onMousedown(event) {
-  if (event.button == 2 && event.target.getAttribute('class') != 'content-box' && event.target.getAttribute('class') != 'move-box' && event.target.getAttribute('class') != 'clost-btn') {
+  if (event.button == 2 && event.target.tagName === 'BODY') {
     count =  JSON.parse(localStorage.getItem('indexNumber')) ?? 0;
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count, textbox : ''})
     render();
