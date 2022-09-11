@@ -72,35 +72,32 @@ function onMousemove(event){
 
 function onKeyup(event){
   if(event.target.getAttribute('class') === 'content-box'){
-    targetIndex = Number(event.target.parentNode.dataset.index)
-    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
     const targetValue = event.target.value 
-    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left :  `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValue}
-    data.splice(findIndex, 1, chagedata)
-    localStorage.setItem("stickynote", JSON.stringify(data));
+    changData(event.target, targetValue);
   }
 }
 
 function onPaste(event){
   if(event.target.getAttribute('class') === 'content-box'){
-    targetIndex = Number(event.target.parentNode.dataset.index)
-    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
     clipboardData = event.clipboardData || window.clipboardData;
     pastedData = clipboardData.getData('Text');
-    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left :  `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : pastedData}
-    data.splice(findIndex, 1, chagedata)
-    localStorage.setItem("stickynote", JSON.stringify(data));
+    changData(event.target, pastedData);
   }
 }
 
 function onCut(event){
   if(event.target.getAttribute('class') === 'content-box'){
-    targetIndex = Number(event.target.parentNode.dataset.index)
-    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : ''}
-    data.splice(findIndex, 1, chagedata)
-    localStorage.setItem("stickynote", JSON.stringify(data));
+    const targetValue = ''
+    changData(event.target, targetValue)
   }
+}
+
+function changData(event, value){
+  targetIndex = Number(event.parentNode.dataset.index)
+  const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+  const chagedata = {width : event.offsetWidth, height : event.offsetHeight, left : `${event.parentNode.getBoundingClientRect().x}px`, top : `${event.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : value}
+  data.splice(findIndex, 1, chagedata)
+  localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 render();
