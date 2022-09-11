@@ -35,6 +35,7 @@ function onMousedown(event) {
       localStorage.setItem("indexNumber", JSON.stringify(count));
     }
     render();
+    localStorage.setItem("stickynote", JSON.stringify(data));
   } else if (event.button === 0 && event.target.getAttribute('class') === 'move-box') {
     findX = event.pageX - event.target.parentNode.getBoundingClientRect().x;
     findY = event.pageY - event.target.parentNode.getBoundingClientRect().y;
@@ -67,8 +68,8 @@ function onMouseup(event){
       data.push(chagedata)
 
     }
+    localStorage.setItem("stickynote", JSON.stringify(data));
   }
-  localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 function onMousemove(event){
@@ -88,8 +89,8 @@ function onKeyup(event){
     const targetValue = event.target.value 
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : targetValue}
     data.splice(findIndex, 1, chagedata)
+    localStorage.setItem("stickynote", JSON.stringify(data));
   }
-  localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 function onPaste(event){
