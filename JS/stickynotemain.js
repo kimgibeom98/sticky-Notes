@@ -13,13 +13,13 @@ function render(){
 }
 
 function onMousedown(event) {
-  if (event.button == 2 && event.target.getAttribute('class') != 'content-box' && event.target.getAttribute('class') != 'move-box') {
+  if (event.button == 2 && event.target.getAttribute('class') != 'content-box' && event.target.getAttribute('class') != 'move-box' && event.target.getAttribute('class') != 'clost-btn') {
     count =  JSON.parse(localStorage.getItem('indexNumber')) ?? 0;
     data.push({width : 200, height : 116, left : cursorx, top : cursory, indexnum : count, textbox : ''})
     render();
     count ++;
     localStorage.setItem("indexNumber", JSON.stringify(count));
-  } else if (event.target.getAttribute('class') === 'clost-btn') {
+  } else if (event.button == 0 && event.target.getAttribute('class') === 'clost-btn') {
     targetIndex = Number(event.target.parentNode.dataset.index);
     for(let i = 0; i < data.length; i++){  
       if (data[i].indexnum === targetIndex) { 
@@ -65,9 +65,6 @@ function onMouseup(event){
       data.push(chagedata)
 
     }
-  }else if(event.button == 2 && event.target.getAttribute('class') === 'content-box'){
-    console.log(123)
-    event.target.removeEventListener('onMouseup',onEventremove);
   }
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
@@ -94,8 +91,19 @@ function onKeyup(event){
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
+function onPaste(event){
+  if(event.target.getAttribute('class') === 'content-box'){
+    targetIndex = Number(event.target.parentNode.dataset.index)
+    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+    const targetValue = event.target.value 
+    console.log(targetValue)
+    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : targetValue}
+    data.splice(findIndex, 1, chagedata)
+  }
+}
 
 render();
+document.addEventListener('paste', onPaste);
 document.addEventListener('mousedown', onMousedown);
 document.addEventListener('mouseup', onMouseup);
 document.addEventListener('mousemove', onMousemove);
