@@ -7,8 +7,8 @@ let count = 0;
 let targetIndex;
 let clipboardData;
 let pastedData;
+// localStorage.clear();
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
-
 
 function render(){
   document.querySelector('body').innerHTML =  data.map((content) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea oncontextmenu='event.cancelBubble=true;' placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`);  
@@ -21,6 +21,7 @@ function onMousedown(event) {
     render();
     count ++;
     localStorage.setItem("indexNumber", JSON.stringify(count));
+    localStorage.setItem("stickynote", JSON.stringify(data));
   } else if (event.button == 0 && event.target.getAttribute('class') === 'clost-btn') {
     targetIndex = Number(event.target.parentNode.dataset.index);
     for(let i = 0; i < data.length; i++){  
@@ -40,7 +41,6 @@ function onMousedown(event) {
     isDragging = true
     document.body.append(event.target.parentNode);
   }
-  localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 function onMouseup(event){
@@ -79,7 +79,6 @@ function onMousemove(event){
     movetarget.style.top = `${event.pageY - findY}px`;
     movetarget.style.left = `${event.pageX - findX}px`;
   }
-  localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 function onKeyup(event){
@@ -114,6 +113,7 @@ function onCut(event){
 }
 
 render();
+
 document.addEventListener('cut', onCut);
 document.addEventListener('copy', onKeyup);
 document.addEventListener('paste', onPaste);
