@@ -5,6 +5,8 @@ let findX;
 let findY;
 let count = 0;
 let targetIndex;
+let clipboardData;
+let pastedData;
 const data = JSON.parse(localStorage.getItem('stickynote')) ?? [];
 
 
@@ -95,14 +97,25 @@ function onPaste(event){
   if(event.target.getAttribute('class') === 'content-box'){
     targetIndex = Number(event.target.parentNode.dataset.index)
     const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-    const targetValue = event.target.value 
-    console.log(targetValue)
-    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : targetValue}
+    clipboardData = event.clipboardData || window.clipboardData;
+    pastedData = clipboardData.getData('Text');
+    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : pastedData}
+    data.splice(findIndex, 1, chagedata)
+  }
+}
+
+function onCut(event){
+  if(event.target.getAttribute('class') === 'content-box'){
+    targetIndex = Number(event.target.parentNode.dataset.index)
+    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+    const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : ''}
     data.splice(findIndex, 1, chagedata)
   }
 }
 
 render();
+document.addEventListener('cut', onCut);
+document.addEventListener('copy', onKeyup);
 document.addEventListener('paste', onPaste);
 document.addEventListener('mousedown', onMousedown);
 document.addEventListener('mouseup', onMouseup);
