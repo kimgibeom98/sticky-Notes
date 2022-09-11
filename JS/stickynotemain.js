@@ -101,6 +101,7 @@ function onPaste(event){
     pastedData = clipboardData.getData('Text');
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : pastedData}
     data.splice(findIndex, 1, chagedata)
+    localStorage.setItem("stickynote", JSON.stringify(data));
   }
 }
 
@@ -110,6 +111,7 @@ function onCut(event){
     const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
     const chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : event.target.parentNode.getBoundingClientRect().left + 'px', top : event.target.parentNode.getBoundingClientRect().top + 'px', indexnum : targetIndex,  textbox : ''}
     data.splice(findIndex, 1, chagedata)
+    localStorage.setItem("stickynote", JSON.stringify(data));
   }
 }
 
