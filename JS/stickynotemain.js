@@ -37,13 +37,15 @@ function onMouseup(event){
   targetIndex = Number(event.target.parentNode.dataset.index)
   const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
   const targetValue = event.target.value; 
+  const contentFind = event.button === 0 && event.target.getAttribute('class') === 'content-box';
+  const moveFind = event.button === 0 && event.target.getAttribute('class') === 'move-box';
   let chagedata;
-  if (event.button === 0 && event.target.getAttribute('class') === 'content-box' || event.button === 0 && event.target.getAttribute('class') === 'move-box') {
-    if(event.button === 0 && event.target.getAttribute('class') === 'content-box'){
+  if (contentFind || moveFind) {
+    if(contentFind){
       document.body.append(event.target.parentNode);
       event.target.focus();
       chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValue}
-    }else if(event.button === 0 && event.target.getAttribute('class') === 'move-box'){
+    }else if(moveFind){
       const targetNotesubelement = event.target.nextSibling.nextSibling;
       const targetValuesubelement = event.target.nextSibling.nextSibling.value; 
       chagedata = {width : targetNotesubelement.offsetWidth, height : targetNotesubelement.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValuesubelement}
