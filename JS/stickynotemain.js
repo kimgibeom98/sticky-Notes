@@ -39,23 +39,23 @@ function onMouseup(event){
   const targetValue = event.target.value; 
   const contentFind = event.button === 0 && event.target.getAttribute('class') === 'content-box';
   const moveFind = event.button === 0 && event.target.getAttribute('class') === 'move-box';
-  let chagedata;
+  let changeData;
   if (contentFind || moveFind) {
     if(contentFind){
       document.body.append(event.target.parentNode);
       event.target.focus();
-      chagedata = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValue}
+      changeData = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValue}
     }else if(moveFind){
       const targetNotesubelement = event.target.nextSibling.nextSibling;
       const targetValuesubelement = event.target.nextSibling.nextSibling.value; 
-      chagedata = {width : targetNotesubelement.offsetWidth, height : targetNotesubelement.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValuesubelement}
+      changeData = {width : targetNotesubelement.offsetWidth, height : targetNotesubelement.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValuesubelement}
     }
     if(data.indexOf(data[data.length -1]) === findIndex){
       data.pop();
-      data.push(chagedata)
+      data.push(changeData)
     }else{
       data.splice(findIndex, 1)
-      data.push(chagedata)
+      data.push(changeData)
 
     }
     localStorage.setItem("stickynote", JSON.stringify(data));
@@ -63,12 +63,12 @@ function onMouseup(event){
 }
 
 function onMousemove(event){
-  const movetarget = document.querySelector('body > div:last-of-type');
+  const moveTarget = document.querySelector('body > div:last-of-type');
   cursorX = `${event.pageX}px`;
   cursorY = `${event.pageY}px`;
   if (isDragging) {
-    movetarget.style.top = `${event.pageY - findY}px`;
-    movetarget.style.left = `${event.pageX - findX}px`;
+    moveTarget.style.top = `${event.pageY - findY}px`;
+    moveTarget.style.left = `${event.pageX - findX}px`;
   }
 }
 
@@ -97,8 +97,8 @@ function onCut(event){
 function changData(event, value){
   targetIndex = Number(event.parentNode.dataset.index)
   const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-  const chagedata = {width : event.offsetWidth, height : event.offsetHeight, left : `${event.parentNode.getBoundingClientRect().x}px`, top : `${event.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : value}
-  data.splice(findIndex, 1, chagedata)
+  const changeData = {width : event.offsetWidth, height : event.offsetHeight, left : `${event.parentNode.getBoundingClientRect().x}px`, top : `${event.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : value}
+  data.splice(findIndex, 1, changeData)
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
