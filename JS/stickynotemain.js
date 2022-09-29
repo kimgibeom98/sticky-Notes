@@ -41,19 +41,19 @@ function onMouseup(event){
   const moveFind = event.button === 0 && event.target.getAttribute('class') === 'move-box';
   let changeData;
   if (contentFind || moveFind) {
-    if(contentFind){
+    if (contentFind){
       document.body.append(event.target.parentNode);
       event.target.focus();
       changeData = {width : event.target.offsetWidth, height : event.target.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValue}
-    }else if(moveFind){
+    } else if (moveFind){
       const targetNotesubelement = event.target.nextSibling.nextSibling;
       const targetValuesubelement = event.target.nextSibling.nextSibling.value; 
       changeData = {width : targetNotesubelement.offsetWidth, height : targetNotesubelement.offsetHeight, left : `${event.target.parentNode.getBoundingClientRect().x}px`, top : `${event.target.parentNode.getBoundingClientRect().y}px`, indexnum : targetIndex,  textbox : targetValuesubelement}
     }
-    if(data.indexOf(data[data.length -1]) === findIndex){
+    if (data.indexOf(data[data.length -1]) === findIndex){
       data.pop();
       data.push(changeData)
-    }else{
+    } else {
       data.splice(findIndex, 1)
       data.push(changeData)
 
@@ -73,14 +73,14 @@ function onMousemove(event){
 }
 
 function onKeyup(event){
-  if(event.target.getAttribute('class') === 'content-box'){
+  if (event.target.getAttribute('class') === 'content-box'){
     const targetValue = event.target.value 
     changData(event.target, targetValue);
   }
 }
 
 function onPaste(event){
-  if(event.target.getAttribute('class') === 'content-box'){
+  if (event.target.getAttribute('class') === 'content-box'){
     clipboardData = event.clipboardData || window.clipboardData;
     pastedData = clipboardData.getData('Text');
     changData(event.target, pastedData);
@@ -88,7 +88,7 @@ function onPaste(event){
 }
 
 function onCut(event){
-  if(event.target.getAttribute('class') === 'content-box'){
+  if (event.target.getAttribute('class') === 'content-box'){
     const targetValue = ''
     changData(event.target, targetValue)
   }
