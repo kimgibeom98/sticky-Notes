@@ -9,3 +9,4 @@ sticky note와같은 메모장기능을 구현한 미니프로젝트 입니다.
 * localStorage를 이용한 데이터 저장
 * 메모장 크기조절
 * 드래그앤드랍 및 내용 수정시 해당 메모장은 최상단으로 이동 
+![Animation](https://user-images.githubusercontent.com/77928818/219843063-ba39bc5c-831a-4d40-8de1-0a6352e87713.gif)
