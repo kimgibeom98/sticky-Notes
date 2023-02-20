@@ -43,7 +43,7 @@ function onMousedown(event: MouseEvent ): void {
   }
 }
 
-function onMouseup(event) {
+function onMouseup(event) : void {
   isDragging = false
   targetIndex = Number(event.target.parentNode.dataset.index)
   const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
