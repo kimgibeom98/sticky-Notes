@@ -73,8 +73,8 @@ function onMouseup(event) : void {
   }
 }
 
-function onMousemove(event) {
-  const moveTarget = document.querySelector('body > div:last-of-type');
+function onMousemove(event : MouseEvent) : void {
+  const moveTarget = document.querySelector('body > div:last-of-type') as HTMLElement;
   cursorX = `${event.pageX}px`;
   cursorY = `${event.pageY}px`;
   if (isDragging) {
@@ -83,24 +83,28 @@ function onMousemove(event) {
   }
 }
 
-function onKeyup(event) {
-  if (event.target.getAttribute('class') === 'content-box') {
-    const targetValue = event.target.value
+function onKeyup(event : MouseEvent) : void {
+  const element = event.target as HTMLElement;
+  if (element.getAttribute('class') === 'content-box') {
+    const targetValue = element.value
     changData(event.target, targetValue);
   }
 }
 
-function onPaste(event) {
-  if (event.target.getAttribute('class') === 'content-box') {
+function onPaste(event : MouseEvent) : void {
+  const element = event.target as HTMLElement;
+
+  if (element.getAttribute('class') === 'content-box') {
     clipboardData = event.clipboardData || window.clipboardData;
     pastedData = clipboardData.getData('Text');
     changData(event.target, pastedData);
   }
 }
 
-function onCut(event) {
-  if (event.target.getAttribute('class') === 'content-box') {
-    const targetValue = ''
+function onCut(event : MouseEvent) {
+  const element = event.target as HTMLElement;
+  if (element.getAttribute('class') === 'content-box') {
+    const targetValue = '';
     changData(event.target, targetValue)
   }
 }
