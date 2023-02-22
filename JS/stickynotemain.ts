@@ -1,35 +1,34 @@
-let cursorX: string, cursorY: string, isDragging: boolean, findX: number, findY: number, targetIndex: number, clipboardData: number, pastedData: string;
+let cursorX: string, cursorY: string, isDragging: boolean, findX: number, findY: number, targetIndex: number, clipData: any, pastedData: string;
 let count = 0;
-const data: Array<dataInfo> =  JSON.parse(localStorage.getItem('stickynote') || '') ?? [];
+const data: Array<dataInfo> = JSON.parse(localStorage.getItem('stickynote') || '') ?? [];
 
 interface dataInfo {
   width: number;
   height: number;
-  left: string | number;
-  top: string | number;
+  left: string;
+  top: string;
   indexnum: number;
   textbox: string;
-}
+};
 
 function render() {
-  const targetBody = document.querySelector('body') as HTMLElement;
-  targetBody.innerHTML = data.map((content: dataInfo) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea oncontextmenu='event.cancelBubble=true;' placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`).join();
+  (document.querySelector('body') as HTMLElement).innerHTML = data.map((content: dataInfo) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea oncontextmenu='event.cancelBubble=true;' placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`).join();
 }
 
-function onMousedown(event: MouseEvent ) {
-  const element  = event.target as HTMLInputElement;
-  const elementParent  = element.parentNode as HTMLInputElement;
-  
+function onMousedown(event: MouseEvent) {
+  const element = event.target as HTMLInputElement;
+  const elementParent = element.parentNode as HTMLInputElement;
+
   if (event.button == 2 && element.tagName === 'BODY') {
     count = JSON.parse(localStorage.getItem('indexNumber') || '') ?? 0;
-    data.push({ width: 200, height: 116, left: cursorX, top: cursorY, indexnum: count, textbox: '' })
+    data.push({ width: 200, height: 116, left: cursorX, top: cursorY, indexnum: count, textbox: '' });
     render();
     count++;
     localStorage.setItem("indexNumber", JSON.stringify(count));
     localStorage.setItem("stickynote", JSON.stringify(data));
   } else if (event.button == 0 && element.getAttribute('class') === 'clost-btn') {
     targetIndex = Number(elementParent.dataset);
-    const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+    const findIndex = data.findIndex((i) => i.indexnum === targetIndex);
     data.splice(findIndex, 1);
     if (data.length === 0) {
       count = 0;
@@ -40,46 +39,45 @@ function onMousedown(event: MouseEvent ) {
   } else if (event.button === 0 && element.getAttribute('class') === 'move-box') {
     findX = event.pageX - elementParent.getBoundingClientRect().x;
     findY = event.pageY - elementParent.getBoundingClientRect().y;
-    isDragging = true
+    isDragging = true;
     document.body.append(elementParent);
   }
 }
 
-function onMouseup(event : MouseEvent) {
-  const element  = event.target as HTMLInputElement;
-  const elementParent  = element.parentNode as HTMLInputElement;
+function onMouseup(event: MouseEvent) {
+  const element = event.target as HTMLInputElement;
+  const elementParent = element.parentNode as HTMLInputElement;
 
-  isDragging = false
-  targetIndex = Number(elementParent.dataset.index)
-  const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
+  isDragging = false;
+  targetIndex = Number(elementParent.dataset.index);
+  const findIndex = data.findIndex((i) => i.indexnum === targetIndex);
   const targetValue = element.value;
   const contentFind = event.button === 0 && element.getAttribute('class') === 'content-box';
   const moveFind = event.button === 0 && element.getAttribute('class') === 'move-box';
-  
+
   let changeData;
   if (contentFind || moveFind) {
     if (contentFind) {
-      document.body.append(elementParent) ;
+      document.body.append(elementParent);
       element.focus();
-      changeData = { width: element.offsetWidth, height: element.offsetHeight, left: `${elementParent.getBoundingClientRect().x}px`, top: `${elementParent.getBoundingClientRect().y}px`, indexnum: targetIndex, textbox: targetValue }
+      changeData = { width: element.offsetWidth, height: element.offsetHeight, left: `${elementParent.getBoundingClientRect().x}px`, top: `${elementParent.getBoundingClientRect().y}px`, indexnum: targetIndex, textbox: targetValue };
     } else if (moveFind) {
       const targetNotesubelement = (element.nextSibling as HTMLInputElement).nextSibling as HTMLInputElement;
       const targetValuesubelement = (element.nextSibling as HTMLInputElement).value;
-      changeData = { width: targetNotesubelement.offsetWidth, height: targetNotesubelement.offsetHeight, left: `${elementParent.getBoundingClientRect().x}px`, top: `${elementParent.getBoundingClientRect().y}px`, indexnum: targetIndex, textbox: targetValuesubelement }
+      changeData = { width: targetNotesubelement.offsetWidth, height: targetNotesubelement.offsetHeight, left: `${elementParent.getBoundingClientRect().x}px`, top: `${elementParent.getBoundingClientRect().y}px`, indexnum: targetIndex, textbox: targetValuesubelement };
     }
     if (data.indexOf(data[data.length - 1]) === findIndex) {
       data.pop();
-      data.push(changeData as dataInfo)
+      data.push(changeData as dataInfo);
     } else {
-      data.splice(findIndex, 1)
-      data.push(changeData as dataInfo)
+      data.splice(findIndex, 1);
+      data.push(changeData as dataInfo);
     }
-    
     localStorage.setItem("stickynote", JSON.stringify(data));
   }
 }
 
-function onMousemove(event : MouseEvent) {
+function onMousemove(event: MouseEvent) {
   const moveTarget = document.querySelector('body > div:last-of-type') as HTMLElement;
   cursorX = `${event.pageX}px`;
   cursorY = `${event.pageY}px`;
@@ -89,44 +87,43 @@ function onMousemove(event : MouseEvent) {
   }
 }
 
-function onKeyup(event : MouseEvent) {
+function onKeyup(event: KeyboardEvent) {
   const element = event.target as HTMLInputElement;
   if (element.getAttribute('class') === 'content-box') {
-    const targetValue = element.value
-    changData(event.target, targetValue);
+    const targetValue = element.value;
+    changData(element, targetValue);
   }
 }
 
-function onPaste(event : MouseEvent){
+function onPaste(event: ClipboardEvent) {
   const element = event.target as HTMLInputElement;
-
   if (element.getAttribute('class') === 'content-box') {
-    clipboardData = event.clipboardData || window.clipboardData;
-    pastedData = clipboardData.getData('Text');
-    changData(event.target, pastedData);
+    clipData = event.clipboardData || window.Clipboard;
+    pastedData = clipData.getData('Text');
+    changData(element, pastedData);
   }
 }
 
-function onCut(event : MouseEvent) {
-  const element = event.target as HTMLElement;
+function onCut(event: ClipboardEvent) {
+  const element = event.target as HTMLInputElement;
   if (element.getAttribute('class') === 'content-box') {
     const targetValue = '';
-    changData(event.target, targetValue)
+    changData(element, targetValue);
   }
 }
 
-function changData(event, value) {
-  targetIndex = Number(event.parentNode.dataset.index)
-  const findIndex = data.findIndex((i) => i.indexnum === targetIndex)
-  const changeData = { width: event.offsetWidth, height: event.offsetHeight, left: `${event.parentNode.getBoundingClientRect().x}px`, top: `${event.parentNode.getBoundingClientRect().y}px`, indexnum: targetIndex, textbox: value }
-  data.splice(findIndex, 1, changeData)
+function changData(event: HTMLDivElement, value: string) {
+  const elementParent = event.parentNode as HTMLInputElement;
+  if (event !== null) targetIndex = Number(elementParent.dataset.index);
+  const findIndex = data.findIndex((i) => i.indexnum === targetIndex);
+  const changeData = { width: event.offsetWidth, height: event.offsetHeight, left: `${elementParent.getBoundingClientRect().x}px`, top: `${elementParent.getBoundingClientRect().y}px`, indexnum: targetIndex, textbox: value };
+  data.splice(findIndex, 1, changeData);
   localStorage.setItem("stickynote", JSON.stringify(data));
 }
 
 render();
 
 document.addEventListener('cut', onCut);
-document.addEventListener('copy', onKeyup);
 document.addEventListener('paste', onPaste);
 document.addEventListener('mousedown', onMousedown);
 document.addEventListener('mouseup', onMouseup);
