@@ -1,8 +1,8 @@
 let cursorX: string, cursorY: string, isDragging: boolean, findX: number, findY: number, targetIndex: number, clipData: any, pastedData: string;
 let count = 0;
-const data: Array<dataInfo> = JSON.parse(localStorage.getItem('stickynote') || '') ?? [];
+const data: Array<DataInfo> = JSON.parse(localStorage.getItem('stickynote') || '') ?? [];
 
-interface dataInfo {
+interface DataInfo {
   width: number;
   height: number;
   left: string;
@@ -12,7 +12,7 @@ interface dataInfo {
 };
 
 function render() {
-  (document.querySelector('body') as HTMLElement).innerHTML = data.map((content: dataInfo) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea oncontextmenu='event.cancelBubble=true;' placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`).join();
+  (document.querySelector('body') as HTMLElement).innerHTML = data.map((content: DataInfo) => `<div class="note-box" data-index=${content.indexnum} style="left:${content.left};  top:${content.top}"><div class="move-box"></div><button class="clost-btn">X</button><textarea oncontextmenu='event.cancelBubble=true;' placeholder="메모를입력하세요..." class="content-box" style="width:${content.width}px; height:${content.height}px;">${content.textbox}</textarea></div>`).join();
 }
 
 function onMousedown(event: MouseEvent) {
@@ -68,10 +68,10 @@ function onMouseup(event: MouseEvent) {
     }
     if (data.indexOf(data[data.length - 1]) === findIndex) {
       data.pop();
-      data.push(changeData as dataInfo);
+      data.push(changeData as DataInfo);
     } else {
       data.splice(findIndex, 1);
-      data.push(changeData as dataInfo);
+      data.push(changeData as DataInfo);
     }
     localStorage.setItem("stickynote", JSON.stringify(data));
   }
